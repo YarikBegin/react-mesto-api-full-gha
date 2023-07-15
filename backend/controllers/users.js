@@ -11,7 +11,8 @@ const {
 } = require('../errors/errors');
 
 const SALT_ROUNDS = 10;
-const JWT_SECRET = 'unique-secret-key';
+const { NODE_ENV, JWT_SECRET } = process.env;
+const KEY_PASSWORD = 'somepassword';
 
 const getUsers = (req, res, next) => {
   User.find({}).then((users) => res.status(http2.constants.HTTP_STATUS_OK).send(users))
@@ -130,6 +131,9 @@ const updateAvatarById = (req, res, next) => {
 const login = (req, res, next) => {
   const { email, password } = req.body;
 
+  if (!email || !password) {
+    throw new BadRequestError('Не передан email или пароль.');
+  }
   return User.findOne({ email }).select('+password')
     .then((user) => {
       if (!user) {
@@ -142,7 +146,7 @@ const login = (req, res, next) => {
           }
           const token = jwt.sign(
             { _id: user._id },
-            JWT_SECRET,
+            NODE_ENV === 'production' ? JWT_SECRET : KEY_PASSWORD,
             { expiresIn: '7d' },
           );
           return res.send({ jwt: token });
