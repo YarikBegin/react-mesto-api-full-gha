@@ -9,7 +9,7 @@
 
 ## Ссылки на проект
 
-IP-адрес 158.160.65.131
+IP 158.160.65.131
 
 Frontend https://begin.nomoredomains.work
 
