@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import Main from "./Main";
 import Footer from "./Footer";
 import PopupWithForm from "./PopupWithForm";
@@ -30,6 +30,8 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState({ path: '', text: '' });
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     if(!isLoggedIn) return;
@@ -125,12 +127,14 @@ function App() {
     apiAuth
     .signup({ email, password })
     .then((result) => {
-      setEmail(result.data.email);
+      setIsInfoTooltipOpen(true);
       setMessage({ path: correctly, text: 'Вы успешно зарегистрировались!' });
+      navigate('/signin');
     })
-    .catch(() =>
+    .catch(() => {
+      setIsInfoTooltipOpen(true);
       setMessage({ path: notCorrectly, text: 'Что-то пошло не так! Попробуйте ещё раз.' })
-    )
+  })
     .finally(() => setIsInfoTooltipOpen(true));
   }
 
@@ -140,9 +144,12 @@ function App() {
     .then((res) => {
       localStorage.setItem('JWT', res.token);
       setEmail(email);
+      setIsLoggedIn(true);
     })
-    .then(() => setIsLoggedIn(true))
-    .catch(console.log);
+    .catch(() => {
+      setIsInfoTooltipOpen(true);
+      setMessage({ path: notCorrectly, text: 'Ошибка при входе. Проверьте свои данные и повторите попытку.' });
+    });
   }
 
   useEffect(() => {
@@ -151,7 +158,7 @@ function App() {
       try {
         const res = await apiAuth.checkToken(localStorage.getItem('JWT'));
         if (res.data) {
-          setEmail(res.data.email);
+          setEmail(res.email);
           setIsLoggedIn(true);
         }
       } catch (err) {

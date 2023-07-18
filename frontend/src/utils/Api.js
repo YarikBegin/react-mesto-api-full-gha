@@ -1,7 +1,6 @@
 class Api {
   constructor({ url, headers }) {
     this._url = url;
-    this._headers = headers;
   }
   _checkResult(res) {
     return res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`);
@@ -14,7 +13,10 @@ class Api {
 
     return fetch(this._url + path, {
       method,
-      headers: this._headers,
+      headers: {
+        authorization: `Bearer ${localStorage.getItem('JWT')}`,
+        'Content-Type': 'application/json',
+      },
       body,
     }).then(this._checkResult);
   }
@@ -54,9 +56,5 @@ class Api {
 }
 
 export const api = new Api({
-  url: `https://mesto.nomoreparties.co/v1/cohort-63`,
-  headers: {
-    authorization: '7843b4ee-a306-45a2-ae22-f9c65ffb4d6f',
-    'Content-Type': 'application/json',
-  }
+  url: `https://begin.nomoredomains.work`,
 });

@@ -43,7 +43,7 @@ class ApiAuth {
 }
 
 export const apiAuth = new ApiAuth({
-  baseUrl: `https://auth.nomoreparties.co`,
+  baseUrl: `https://begin.nomoredomains.work`,
   headers: {
     'Content-Type': 'application/json',
   },

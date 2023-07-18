@@ -15,8 +15,8 @@ function Card({ onCardClick, link, name, likes, owner, _id, onCardLike, onCardDe
     onCardLike(likes, _id);
   }
 
-  const isOwn = owner._id === currentUser._id;
-  const isLiked = likes.some(i => i._id === currentUser._id);
+  const isOwn = owner === currentUser._id;
+  const isLiked = likes.some((i) => i === currentUser._id);
   const cardLikeButtonClassName = (
     `card__button-like ${isLiked && 'card__button-like_active'}`
   );;
