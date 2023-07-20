@@ -11,7 +11,7 @@ function Auth({ formName, onSubmit, title, children, buttonText }) {
           {buttonText}
         </button>
         {formName === 'register' && (<p className='auth__text'>Уже зарегистрированы?{''}
-        <Link className='auth__link' to='/sign-in'>Войти</Link></p>)}
+        <Link className='auth__link' to='/signin'>Войти</Link></p>)}
       </form>
     </div>
   )

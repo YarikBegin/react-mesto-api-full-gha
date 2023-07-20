@@ -9,12 +9,12 @@ function Header({ isLoggedIn, email, onSignOut }) {
   return (
     <header className="header">
       <img className="logo" src={logo} alt="Логотип Место" />
-      {location.pathname === '/sign-in' && (<Link className='header__link' to={'/sign-up'}>Регистрация</Link>)}
-      {location.pathname === '/sign-up' && (<Link className='header__link' to={'/sign-in'}>Вход</Link>)}
+      {location.pathname === '/signin' && (<Link className='header__link' to={'/signup'}>Регистрация</Link>)}
+      {location.pathname === '/signup' && (<Link className='header__link' to={'/signin'}>Вход</Link>)}
       {isLoggedIn && (<>
       <div className='header__align'>
         {email}
-        <Link className='header__link' to={'/sign-in'} onClick={onSignOut}>Выйти</Link>
+        <Link className='header__link' to={'/signin'} onClick={onSignOut}>Выйти</Link>
       </div>
       </>)}
     </header>

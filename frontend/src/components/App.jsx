@@ -192,14 +192,14 @@ function App() {
         onSignOut={onSignOut} />}
         />
       <Route
-            path='sign-up'
+            path='signup'
             element={
             <Register
             onRegister={heandleRegister}
             isLoggedIn={isLoggedIn} />}
       />
       <Route
-        path='sign-in'
+        path='signin'
         element={
         <Login
           onAuth={heandleLogin}
@@ -208,7 +208,7 @@ function App() {
       />
       <Route
         path='*'
-        element={isLoggedIn ? <Navigate to='/' /> : <Navigate to='/sign-in' />}
+        element={isLoggedIn ? <Navigate to='/' /> : <Navigate to='/signin' />}
       />
       </Routes>
       <Footer />
