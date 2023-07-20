@@ -7,7 +7,6 @@ const {
   ConflictError,
   NotFoundError,
   UnauthorizedError,
-  ValidationError,
 } = require('../errors/errors');
 
 const SALT_ROUNDS = 10;
@@ -76,8 +75,8 @@ const createUser = (req, res, next) => {
       });
     })
     .catch((error) => {
-      if (error.name === 'ValidationError') {
-        next(new ValidationError(`Пожалуйста, проверьте правильность заполнения полей: ${Object.values(error.errors).map((err) => `${err.message.slice(5)}`).join(' ')}`));
+      if (error.name === 'BadRequestError') {
+        next(new BadRequestError(`Пожалуйста, проверьте правильность заполнения полей: ${Object.values(error.errors).map((err) => `${err.message.slice(5)}`).join(' ')}`));
       } else if (error.code === 11000) {
         next(new ConflictError('Пользователь с таким email существует'));
       } else {
@@ -99,8 +98,8 @@ const updateUserById = (req, res, next) => {
       }
     })
     .catch((error) => {
-      if (error.name === 'ValidationError') {
-        next(new ValidationError(`Пожалуйста, проверьте правильность заполнения полей: ${Object.values(error.errors).map((err) => `${err.message.slice(5)}`).join(' ')}`));
+      if (error.name === 'BadRequestError') {
+        next(new BadRequestError(`Пожалуйста, проверьте правильность заполнения полей: ${Object.values(error.errors).map((err) => `${err.message.slice(5)}`).join(' ')}`));
       } else {
         next(error);
       }
@@ -120,8 +119,8 @@ const updateAvatarById = (req, res, next) => {
       }
     })
     .catch((error) => {
-      if (error.name === 'ValidationError') {
-        next(new ValidationError(`Пожалуйста, проверьте правильность заполнения полей: ${Object.values(error.errors).map((err) => `${err.message.slice(5)}`).join(' ')}`));
+      if (error.name === 'BadRequestError') {
+        next(new BadRequestError(`Пожалуйста, проверьте правильность заполнения полей: ${Object.values(error.errors).map((err) => `${err.message.slice(5)}`).join(' ')}`));
       } else {
         next(error);
       }
@@ -131,9 +130,9 @@ const updateAvatarById = (req, res, next) => {
 const login = (req, res, next) => {
   const { email, password } = req.body;
 
-  if (!email || !password) {
-    throw new BadRequestError('Не передан email или пароль.');
-  }
+  // if (!email || !password) {
+  //   throw new BadRequestError('Не передан email или пароль.');
+  // }
   return User.findOne({ email }).select('+password')
     .then((user) => {
       if (!user) {

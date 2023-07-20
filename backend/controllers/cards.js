@@ -4,7 +4,6 @@ const {
   BadRequestError,
   ForbiddenError,
   NotFoundError,
-  ValidationError,
 } = require('../errors/errors');
 
 const getCards = (req, res, next) => {
@@ -24,14 +23,13 @@ const createCard = (req, res, next) => {
       res.status(http2.constants.HTTP_STATUS_CREATED).send(newCard);
     })
     .catch((error) => {
-      if (error.name === 'ValidationError') {
-        next(new ValidationError(`Пожалуйста, проверьте правильность заполнения полей:
+      if (error.name === 'BadRequestError') {
+        next(new BadRequestError(`Пожалуйста, проверьте правильность заполнения полей:
         ${Object.values(error.errors).map((err) => `${err.message.slice(5)}`).join(' ')}`));
       } else {
         next(error);
       }
-    })
-    .catch(next);
+    });
 };
 
 const deleteCard = (req, res, next) => {
