@@ -1,6 +1,6 @@
 class Api {
-  constructor({ url, headers }) {
-    this._url = url;
+  constructor(options) {
+    this._url = options.url;
   }
   _checkResult(res) {
     return res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`);
