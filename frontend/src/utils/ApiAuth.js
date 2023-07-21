@@ -43,7 +43,7 @@ class ApiAuth {
 }
 
 export const apiAuth = new ApiAuth({
-  baseUrl: `https://begin.nomoredomains.work`,
+  baseUrl: `https://api.begin.nomoredomains.work`,
   headers: {
     'Content-Type': 'application/json',
   },

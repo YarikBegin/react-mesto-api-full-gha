@@ -56,5 +56,5 @@ class Api {
 }
 
 export const api = new Api({
-  url: `https://begin.nomoredomains.work`,
+  url: `https://api.begin.nomoredomains.work`,
 });
