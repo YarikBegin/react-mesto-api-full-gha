@@ -76,7 +76,7 @@ function App() {
 
   function handleCardLike(likes, _id) {
     // Снова проверяем, есть ли уже лайк на этой карточке
-    const isLiked = likes.some(i => i._id === currentUser._id);
+    const isLiked = likes.some(i => i === currentUser._id);
 
     // Отправляем запрос в API и получаем обновлённые данные карточки
     api
