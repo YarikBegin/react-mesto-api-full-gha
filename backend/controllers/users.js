@@ -148,7 +148,7 @@ const login = (req, res, next) => {
             NODE_ENV === 'production' ? JWT_SECRET : KEY_PASSWORD,
             { expiresIn: '7d' },
           );
-          return res.send({ jwt: token });
+          return res.send({ token });
         });
     })
     .catch((error) => {
