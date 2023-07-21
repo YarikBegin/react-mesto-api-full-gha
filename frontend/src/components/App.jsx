@@ -74,15 +74,15 @@ function App() {
     setSelectedCard(card);
   }
 
-  function handleCardLike(likes, card) {
+  function handleCardLike(likes, _id) {
     // Снова проверяем, есть ли уже лайк на этой карточке
-    const isLiked = likes.some(i => i === currentUser._id);
+    const isLiked = likes.some(i => i._id === currentUser._id);
 
     // Отправляем запрос в API и получаем обновлённые данные карточки
     api
-    .changeLikeCardStatus(card._id, isLiked)
+    .changeLikeCardStatus(_id, isLiked)
     .then((newCard) => {
-        setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
+        setCards((state) => state.map((c) => c._id === _id ? newCard : c));
     })
     .catch((err) => console.log(err));
   }
